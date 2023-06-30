@@ -25,6 +25,7 @@
 <div class="row">
   <div class="col-xs-12" style="overflow: hidden">
     <app-new-project
+      @slideState
       *ngIf="createNew"
       (projectCreated)="onProjectCreated($event)"
       (creationCancelled)="createNew = false"
@@ -38,9 +39,11 @@
       <div class="loading-bar-element" *ngIf="progress != 'finished'"></div>
     </div>
     <app-project
-      *ngFor="let prj of projects; let i = index"
+      *ngFor="let prj of displayedProjects; let i = index"
       [project]="prj"
       [@markedState]="markedPrjIndex === i ? 'marked' : 'default'"
+      [@itemState]="createNew ? 'slideDown' : 'slideUp'"
+      (@itemState.done)="onAnimated($event, i)"
       [ngClass]="{
         inactive: prj.status === 'inactive'
       }"
