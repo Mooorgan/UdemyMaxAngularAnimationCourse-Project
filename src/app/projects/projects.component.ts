@@ -5,6 +5,7 @@ import { Project } from './project.model';
 import { ProjectsService } from './projects.service';
 import {
   itemStateTrigger,
+  listStateTrigger,
   markedTrigger,
   slideStateTrigger,
 } from './animations';
@@ -23,8 +24,9 @@ import {
     markedTrigger,
     itemStateTrigger,
     slideStateTrigger,
-    routeFadeStateTrigger,
+    // routeFadeStateTrigger,
     routeSlideStateTrigger,
+    listStateTrigger,
   ],
 })
 export class ProjectsComponent implements OnInit {
@@ -32,7 +34,6 @@ export class ProjectsComponent implements OnInit {
   @HostBinding('@routeSlideState') routeAnimation = true;
 
   projects!: Project[];
-  displayedProjects: Project[] = [];
   markedPrjIndex = 0;
   progress = 'progressing';
   createNew = false;
@@ -43,9 +44,6 @@ export class ProjectsComponent implements OnInit {
     this.prjService.loadProjects().subscribe((prj: Project[]) => {
       this.progress = 'finished';
       this.projects = prj;
-      if (this.projects.length >= 1) {
-        this.displayedProjects.push(this.projects[0]);
-      }
     });
   }
 
@@ -60,20 +58,8 @@ export class ProjectsComponent implements OnInit {
   onProjectCreated(project: Project) {
     this.createNew = false;
     // this.projects.push(project);
-    setTimeout(() => {
-      this.projects.unshift(project);
-    }, 300);
-  }
-
-  onAnimated(event: AnimationEvent, lastPrjId: number) {
-    if (event.fromState !== 'void') {
-      return;
-    }
-
-    if (this.projects.length > lastPrjId + 1) {
-      this.displayedProjects.push(this.projects[lastPrjId + 1]);
-    } else {
-      this.projects = this.displayedProjects;
-    }
+    this.projects.unshift(project);
+    // setTimeout(() => {
+    // }, 300);
   }
 }
