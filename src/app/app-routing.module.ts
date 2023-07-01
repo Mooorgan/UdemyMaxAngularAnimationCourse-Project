@@ -5,14 +5,20 @@ import { ProjectsComponent } from './projects/projects.component';
 import { UsersComponent } from './users/users.component';
 
 const appRoutes: Routes = [
-  { path: '', component: ProjectsComponent },
-  { path: 'users', component: UsersComponent }
+  {
+    path: '',
+    component: ProjectsComponent,
+    data: { animation: { page: 'rootPage' } },
+  },
+  {
+    path: 'users',
+    component: UsersComponent,
+    data: { animation: { page: 'usersPage' } },
+  },
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(appRoutes)
-  ],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(appRoutes)],
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

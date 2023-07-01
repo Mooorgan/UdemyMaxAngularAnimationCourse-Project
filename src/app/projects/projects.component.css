@@ -2,6 +2,10 @@
   border: 1px solid #ccc;
 }
 
+:host {
+  position: absolute;
+}
+
 /* .marked {
   border: 2px solid blue;
   animation: marked 0.5s ease-out forwards;
